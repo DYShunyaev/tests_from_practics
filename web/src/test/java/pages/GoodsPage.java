@@ -46,7 +46,7 @@ public class GoodsPage extends GUIBase {
             List<WebElement> cells = row.findElements(By.xpath(".//td"));
             GoodsRowDDO goodsRowDDO = new GoodsRowDDO();
 
-            goodsRowDDO.setNumber(count);
+            goodsRowDDO.setId(count);
             goodsRowDDO.setName(cells.get(0).getText());
             goodsRowDDO.setType(cells.get(1).getText());
             goodsRowDDO.setExotic(Boolean.parseBoolean(cells.get(2).getText()));

@@ -36,12 +36,14 @@
             <artifactId>selenium-java</artifactId>
             <version>4.22.0</version>
         </dependency>
-        <!--webdriver-->
+
+        <!--webdriver_manager-->
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
             <version>5.8.0</version>
         </dependency>
     </dependencies>
+
 
 </project>

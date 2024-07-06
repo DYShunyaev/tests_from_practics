@@ -32,7 +32,7 @@ public class GoodsPageTests extends GUIBase {
     }
 
     @AfterEach
-    private void resetData() {
+    public void resetData() {
         mainPage.resetData();
     }
 }

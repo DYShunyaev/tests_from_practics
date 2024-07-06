@@ -1,9 +1,7 @@
 package pages;
 
-import config.ConfigProvider;
 import org.openqa.selenium.By;
 import config.GUIBase;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -22,18 +20,26 @@ public class MainPage extends GUIBase {
     }
 
     public MainPage goToGoodsPage() {
-        new WebDriverWait(driver, Duration.ofSeconds(20))
-                .until(ExpectedConditions.elementToBeClickable(sandboxList))
-                .click();
+        waitingToClickableSandboxList();
         driver.findElement(sandboxListGoods).click();
         return this;
     }
 
     public MainPage resetData() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.elementToBeClickable(sandboxList))
-                .click();
+        waitingToClickableSandboxList();
         driver.findElement(sandboxListResetData).click();
         return this;
+    }
+
+    private void waitingToClickableSandboxList() {
+        try {
+            new WebDriverWait(driver, Duration.ofSeconds(15))
+                    .until(ExpectedConditions.elementToBeClickable(sandboxList))
+                    .findElement(sandboxList)
+                    .click();
+        }
+        catch (Exception e) {
+            waitingToClickableSandboxList();
+        }
     }
 }
