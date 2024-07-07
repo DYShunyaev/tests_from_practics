@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import config.GUIBase;
 import org.openqa.selenium.support.PageFactory;
@@ -20,14 +21,18 @@ public class MainPage extends GUIBase {
     }
 
     public MainPage goToGoodsPage() {
-        waitingToClickableSandboxList();
-        driver.findElement(sandboxListGoods).click();
+        Allure.step("Переход на страницу \"Товары\"",() -> {
+            waitingToClickableSandboxList();
+            driver.findElement(sandboxListGoods).click();
+        });
         return this;
     }
 
     public MainPage resetData() {
-        waitingToClickableSandboxList();
-        driver.findElement(sandboxListResetData).click();
+        Allure.step("Переход на страницу \"Сброс данных\"",() -> {
+            waitingToClickableSandboxList();
+            driver.findElement(sandboxListResetData).click();
+        });
         return this;
     }
 

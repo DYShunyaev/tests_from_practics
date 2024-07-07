@@ -2,6 +2,7 @@ package pages;
 
 import config.GUIBase;
 import ddo.GoodsRowDDO;
+import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
@@ -21,39 +22,46 @@ public class GoodsPage extends GUIBase {
     private final MainPage mainPage = new MainPage();
 
     public GoodsPage addInsertButton() {
-        mainPage.goToGoodsPage();
-        driver.findElement(insertButton).click();
+        Allure.step("Выбор кнопки \"Добавить\" на странице \"Товары\"",() -> {
+            mainPage.goToGoodsPage();
+            driver.findElement(insertButton).click();
+        });
         return this;
     }
 
     public GoodsPage addDataFromTable(String name, boolean isFruit, boolean exotic) {
-        driver.findElement(inputField).sendKeys(name);
-        new Select(driver.findElement(selectField)).selectByValue(isFruit ? "FRUIT" : "VEGETABLE");
-        if (exotic) driver.findElement(selectExoticField).click();
-        driver.findElement(saveButton).click();
+        Allure.step("Добавление нового товара в таблицу на странице \"Товары\"",() -> {
+            driver.findElement(inputField).sendKeys(name);
+            new Select(driver.findElement(selectField)).selectByValue(isFruit ? "FRUIT" : "VEGETABLE");
+            if (exotic) driver.findElement(selectExoticField).click();
+            driver.findElement(saveButton).click();
+        });
         return this;
     }
 
     public List<GoodsRowDDO> getTableListOfGoods() {
         mainPage.goToGoodsPage();
-        WebElement table = driver.findElement(tableListOfGoods).findElement(By.xpath("./tbody"));
-        List<WebElement> rows = table.findElements(By.xpath(".//tr"));
-
         List<GoodsRowDDO> goodsRowDDOS = new ArrayList<>();
-        int count = 1;
+        Allure.step("Получение данных из главной табицы на странице \"Товары\"",() -> {
+            WebElement table = driver.findElement(tableListOfGoods).findElement(By.xpath("./tbody"));
+            List<WebElement> rows = table.findElements(By.xpath(".//tr"));
 
-        for (WebElement row : rows) {
-            List<WebElement> cells = row.findElements(By.xpath(".//td"));
-            GoodsRowDDO goodsRowDDO = new GoodsRowDDO();
+            int count = 1;
 
-            goodsRowDDO.setId(count);
-            goodsRowDDO.setName(cells.get(0).getText());
-            goodsRowDDO.setType(cells.get(1).getText());
-            goodsRowDDO.setExotic(Boolean.parseBoolean(cells.get(2).getText()));
+            for (WebElement row : rows) {
+                List<WebElement> cells = row.findElements(By.xpath(".//td"));
+                GoodsRowDDO goodsRowDDO = new GoodsRowDDO();
 
-            goodsRowDDOS.add(goodsRowDDO);
-            count++;
-        }
+                goodsRowDDO.setId(count);
+                goodsRowDDO.setName(cells.get(0).getText());
+                goodsRowDDO.setType(cells.get(1).getText());
+                goodsRowDDO.setExotic(Boolean.parseBoolean(cells.get(2).getText()));
+
+                goodsRowDDOS.add(goodsRowDDO);
+                count++;
+            }
+        });
+
 
         return goodsRowDDOS;
     }

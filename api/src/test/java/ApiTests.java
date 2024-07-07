@@ -1,6 +1,7 @@
 import config_provider.ConfigProvider;
 import ddo.GoodsRowDDO;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import specifications.Specifications;
 import utils.file_helper.FileHelper;
@@ -10,6 +11,7 @@ import java.util.List;
 
 import static io.restassured.RestAssured.given;
 
+@Tag("API")
 public class ApiTests {
 
     @Test
