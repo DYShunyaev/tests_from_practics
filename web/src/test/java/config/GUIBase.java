@@ -6,28 +6,27 @@ import io.qameta.allure.Allure;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Tag;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
 
 @Slf4j
+@Tag("GUI")
 public abstract class GUIBase {
 
     public static WebDriver driver;
 
     @BeforeAll
-    static void setUp() throws MalformedURLException {
+    static void setUp() {
         Allure.step("Запуск WebDriver", () -> {
             WebDriverManager.chromiumdriver().config()
                     .setChromeDriverUrl(
                             new URL(ConfigProvider.DRIVER_URL));
             WebDriverManager.chromiumdriver().clearDriverCache().setup();
-//        ChromeOptions options = new ChromeOptions();
-//        options.addArguments("--headless");
             driver = new ChromeDriver();
             driver.manage().window().maximize();
             driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
