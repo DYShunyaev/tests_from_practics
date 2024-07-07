@@ -19,6 +19,15 @@ public class Specifications {
                 .build();
     }
 
+    public static RequestSpecification requestSpecFromDownload(String url) {
+        return new RequestSpecBuilder()
+                .setBaseUri(url)
+                .setContentType(ContentType.TEXT)
+                .log(LogDetail.ALL)
+                .addFilter(new AllureRestAssured())
+                .build();
+    }
+
     public static ResponseSpecification responseSpecOK200() {
         return new ResponseSpecBuilder()
                 .expectStatusCode(200)

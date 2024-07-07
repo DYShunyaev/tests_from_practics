@@ -22,7 +22,7 @@ public class ApiTests {
     @Test
     @DisplayName("Проверка получения всех товаров через API")
     public void getListOfGoods() {
-        Allure.step("Пдготовка спецификаций, ожидаемый код - 200",() ->
+        Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
             Specifications.installSpecification(
                     Specifications.requestSpec(ConfigProvider.URL),Specifications.responseSpecOK200()));
         Allure.step("Выполнение GET запроса для получения всех товаров",() -> {
@@ -34,10 +34,11 @@ public class ApiTests {
             Assertions.assertEquals(4, goodsRowDDOList.size());
         });
     }
+
     @Test
     @DisplayName("Проверка добавления нового товара через API")
     public void setGoodToListOfGoods() {
-        Allure.step("Пдготовка спецификаций, ожидаемый код - 200",() ->
+        Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
             Specifications.installSpecification(
                     Specifications.requestSpec(ConfigProvider.URL),Specifications.responseSpecOK200()));
         Allure.step("Подготовка тестовых данных и отправка POST запроса",() -> {
@@ -60,7 +61,7 @@ public class ApiTests {
     @Test
     @DisplayName("Проверка отправки запроса без тела - ошибка 400")
     public void setNullObjectToListOfGood() {
-        Allure.step("Пдготовка спецификаций, ожидаемый код - 400",() ->
+        Allure.step("Подготовка спецификаций, ожидаемый код - 400",() ->
             Specifications.installSpecification(
                     Specifications.requestSpec(ConfigProvider.URL),Specifications.responseSpecBadRequest400()));
         Allure.step("Отправка POST запроса для добавления нового товара с пустым телом",() -> {
@@ -77,7 +78,7 @@ public class ApiTests {
     @Test
     @DisplayName("Проверка функции Сброса Данных через API")
     public void resetDataFromAPI() {
-        Allure.step("Пдготовка спецификаций, ожидаемый код - 200",() ->
+        Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
             Specifications.installSpecification(
                     Specifications.requestSpec(ConfigProvider.URL),Specifications.responseSpecOK200()));
         Allure.step("Отправка POST запроса для выполнения Сброса Данных, проверка кода ответа",() ->{
