@@ -42,8 +42,7 @@ public class FileDownloadTask {
     }
 
     @AfterEach
-    public void deleteFile() throws InterruptedException {
-        Thread.sleep(10000);
+    public void deleteFile() {
         DOWNLOAD_FILE.delete();
     }
 }
