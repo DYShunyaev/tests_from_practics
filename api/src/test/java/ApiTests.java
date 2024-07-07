@@ -72,7 +72,6 @@ public class ApiTests {
                     .extract().statusCode();
             Assertions.assertEquals(code, StatusCode.BAD_REQ_400.getCode());
         });
-
     }
 
     @Test
