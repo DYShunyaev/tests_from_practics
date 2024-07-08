@@ -1,16 +1,17 @@
 package pages;
 
-import config.GUIBase;
 import ddo.GoodsRowDDO;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import web_driver_config.WebDriverInitial;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class GoodsPage extends GUIBase {
+public class GoodsPage {
 
     private final By tableListOfGoods = By.xpath("//*[contains(@class,\"table\")]");
     private final By insertButton = By.xpath("//button[contains(@class,\"btn btn-primary\")]");
@@ -19,6 +20,7 @@ public class GoodsPage extends GUIBase {
     private final By selectExoticField = By.xpath("//input[contains(@id,\"exotic\")]");
     private final By saveButton = By.xpath("//button[contains(@id,\"save\")]");
 
+    private final WebDriver driver = WebDriverInitial.getWebDriver().getDriver();
     private final MainPage mainPage = new MainPage();
 
     public GoodsPage addInsertButton() {

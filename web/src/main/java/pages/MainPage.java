@@ -2,20 +2,21 @@ package pages;
 
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
-import config.GUIBase;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import web_driver_config.WebDriverInitial;
 
 import java.time.Duration;
 
-public class MainPage extends GUIBase {
+public class MainPage {
 
     private final By sandboxList = By.xpath("//*[contains(@class,\"nav-link dropdown-toggle\")]");
     private final By sandboxListGoods = By.xpath("//a[text()='Товары']");
     private final By sandboxListResetData = By.xpath("//a[contains(@id,\"reset\")]");
 
-
+    private final WebDriver driver = WebDriverInitial.getWebDriver().getDriver();
     public MainPage() {
         PageFactory.initElements(driver,this);
     }
@@ -28,12 +29,19 @@ public class MainPage extends GUIBase {
         return this;
     }
 
-    public MainPage resetData() {
+    public void resetData() {
         Allure.step("Переход на страницу \"Сброс данных\"",() -> {
             waitingToClickableSandboxList();
             driver.findElement(sandboxListResetData).click();
         });
-        return this;
+    }
+
+    public String getTitle() {
+        return driver.getTitle();
+    }
+
+    public String getCurrentUrl() {
+        return driver.getCurrentUrl();
     }
 
     private void waitingToClickableSandboxList() {

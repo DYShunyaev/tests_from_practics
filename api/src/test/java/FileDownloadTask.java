@@ -24,7 +24,7 @@ public class FileDownloadTask {
 
     @Test
     @DisplayName("Проверка на скачивание файла с помощью RestAssured")
-    public void testFromDownloadFile() throws IOException {
+    public void testFromDownloadFile() {
         Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
                 Specifications.installSpecification(
                         Specifications.requestSpecFromDownload(ConfigProvider.URL_TO_DOWNLOAD_FILE),Specifications.responseSpecOK200()));

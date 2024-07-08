@@ -8,19 +8,17 @@ import pages.MainPage;
 @Tag("GUI")
 @DisplayName("Проверка Главной страницы")
 public class MainPageTests extends GUIBase {
-    MainPage mainPage = new MainPage();
+    private final MainPage mainPage = new MainPage();
 
     @Test
     @DisplayName("Базовый тест, проверка отображения Главной страницы")
     public void test() {
-        String tittle = driver.getTitle();
-        Assertions.assertTrue(tittle.contains("QualIT"));
+        Assertions.assertTrue(mainPage.getTitle().contains("QualIT"));
     }
 
     @Test
     @DisplayName("Проверка перехода на главную страницу")
     public void testGoodsPage() {
-        mainPage.goToGoodsPage();
-        Assertions.assertTrue(driver.getCurrentUrl().contains("food"));
+        Assertions.assertTrue(mainPage.goToGoodsPage().getCurrentUrl().contains("food"));
     }
 }
