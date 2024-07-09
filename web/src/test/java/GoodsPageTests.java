@@ -4,6 +4,9 @@ import io.qameta.allure.Allure;
 import org.junit.jupiter.api.*;
 import pages.GoodsPage;
 import pages.MainPage;
+import utils.database.CommonSqlScript;
+import utils.database.SqlExecutor;
+import utils.file_helper.FileHelper;
 
 import java.util.List;
 
@@ -12,6 +15,7 @@ import java.util.List;
 public class GoodsPageTests extends GUIBase {
     private final GoodsPage goodsPage = new GoodsPage();
     private final MainPage mainPage = new MainPage();
+    private final SqlExecutor sqlExecutor = new SqlExecutor();
 
     @Test
     @DisplayName("Проверка добавления нового продукта")
@@ -21,6 +25,12 @@ public class GoodsPageTests extends GUIBase {
             List<GoodsRowDDO> goodsRowDDOS = goodsPage.addInsertButton()
                     .addDataFromTable(name,true,true).getTableListOfGoods();
             Assertions.assertEquals(goodsRowDDOS.get(goodsRowDDOS.size()-1).getName(),name);
+            List<GoodsRowDDO> goodsRowDDOSInDataBase = sqlExecutor
+                    .createQuerySql(
+                            CommonSqlScript.GET_DATA_WITH_NAME
+                            ,name)
+                    .getSelectResult();
+            Assertions.assertNotNull(goodsRowDDOSInDataBase.get(0));
         });
     }
 

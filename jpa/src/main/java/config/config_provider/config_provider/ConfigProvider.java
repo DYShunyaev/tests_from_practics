@@ -1,4 +1,4 @@
-package config_provider;
+package config.config_provider.config_provider;
 
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
@@ -19,4 +19,5 @@ public interface ConfigProvider {
     String JPA_URL = readConfig().getString("jpa_url");
     String JPA_USERNAME = readConfig().getString("jpa_username");
     String JPA_PASSWORD = readConfig().getString("jpa_password");
+
 }

@@ -1,9 +1,9 @@
 package pages;
 
+import config.config_provider.config_provider.ConfigProvider;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import web_driver_config.WebDriverInitial;
@@ -17,13 +17,10 @@ public class MainPage {
     private final By sandboxListResetData = By.xpath("//a[contains(@id,\"reset\")]");
 
     private final WebDriver driver = WebDriverInitial.getWebDriver().getDriver();
-    public MainPage() {
-        PageFactory.initElements(driver,this);
-    }
 
     public MainPage goToGoodsPage() {
         Allure.step("Переход на страницу \"Товары\"",() -> {
-            waitingToClickableSandboxList();
+            waitingToClickableSandboxList(0);
             driver.findElement(sandboxListGoods).click();
         });
         return this;
@@ -31,7 +28,7 @@ public class MainPage {
 
     public void resetData() {
         Allure.step("Переход на страницу \"Сброс данных\"",() -> {
-            waitingToClickableSandboxList();
+            waitingToClickableSandboxList(0);
             driver.findElement(sandboxListResetData).click();
         });
     }
@@ -44,7 +41,8 @@ public class MainPage {
         return driver.getCurrentUrl();
     }
 
-    private void waitingToClickableSandboxList() {
+    private void waitingToClickableSandboxList(int count) {
+        if (count > 5) throw new RuntimeException();
         try {
             new WebDriverWait(driver, Duration.ofSeconds(15))
                     .until(ExpectedConditions.elementToBeClickable(sandboxList))
@@ -52,7 +50,7 @@ public class MainPage {
                     .click();
         }
         catch (Exception e) {
-            waitingToClickableSandboxList();
+            waitingToClickableSandboxList(count+1);
         }
     }
 }

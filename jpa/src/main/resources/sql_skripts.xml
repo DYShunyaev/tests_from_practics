@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<sqlScriptsList>
+    <singleScript name ="GET_ALL">
+        SELECT * FROM FOOD
+    </singleScript>
+
+    <singleScript name ="GET_DATA_WITH_NAME">
+        SELECT * FROM FOOD WHERE FOOD_NAME = ?
+    </singleScript>
+
+    <singleScript name ="SET_NEW_DATA">
+        INSERT INTO FOOD (FOOD_NAME, FOOD_TYPE, FOOD_EXOTIC) VALUES (?, ?, ?)
+    </singleScript>
+
+    <singleScript name ="DELETE_WITH_NAME">
+        DELETE FROM FOOD WHERE FOOD_NAME = ?
+    </singleScript>
+
+    <singleScript name ="SET_NAME_WITH_OLD_NAME">
+        UPDATE FOOD SET FOOD_NAME = ? WHERE FOOD_NAME = ?
+    </singleScript>
+
+    <singleScript name ="CREATE_TABLE_USERS">
+        CREATE TABLE USERS (
+        id INT PRIMARY KEY,
+        username VARCHAR(50) NOT NULL,
+        email VARCHAR(100) UNIQUE,
+        age INT,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP)
+    </singleScript>
+
+    <singleScript name="SHOW_TABLES">
+        SHOW TABLES
+    </singleScript>
+
+    <singleScript name = "DROP_TABLE_USERS">
+        DROP TABLE USERS
+    </singleScript>
+</sqlScriptsList>

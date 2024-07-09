@@ -1,12 +1,10 @@
-import config_provider.ConfigProvider;
+import config.config_provider.config_provider.ConfigProvider;
 import ddo.GoodsRowDDO;
 import io.qameta.allure.Allure;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Tag;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import specifications.Specifications;
+import utils.database.CommonSqlScript;
+import utils.database.SqlExecutor;
 import utils.file_helper.FileHelper;
 import utils.json_utils.JsonUtil;
 
@@ -15,11 +13,13 @@ import java.util.List;
 import static io.restassured.RestAssured.given;
 
 @Tag("API")
-@Slf4j
 @DisplayName("Проверка API")
 public class ApiTests {
 
+    private final SqlExecutor sqlExecutor = new SqlExecutor();
+
     @Test
+    @Order(1)
     @DisplayName("Проверка получения всех товаров через API")
     public void getListOfGoods() {
         Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
@@ -31,11 +31,14 @@ public class ApiTests {
                     .get("/api/food")
                     .then().log().all()
                     .extract().body().jsonPath().getList(".", GoodsRowDDO.class);
-            Assertions.assertEquals(4, goodsRowDDOList.size());
+            List<GoodsRowDDO> goodsRowDDOSInDataBase = sqlExecutor.createQuerySql(CommonSqlScript.GET_ALL)
+                    .getSelectResult();
+            Assertions.assertEquals(goodsRowDDOSInDataBase.size(), goodsRowDDOList.size());
         });
     }
 
     @Test
+    @Order(2)
     @DisplayName("Проверка добавления нового товара через API")
     public void setGoodToListOfGoods() {
         Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
@@ -54,11 +57,17 @@ public class ApiTests {
                     .log().all()
                     .extract().statusCode();
             Assertions.assertEquals(code, StatusCode.OK_200.getCode());
+            List<GoodsRowDDO> goodsRowDDOSInDataBase = sqlExecutor
+                    .createQuerySql(
+                    CommonSqlScript.GET_DATA_WITH_NAME
+                            ,goodsRowDDO.getName())
+                    .getSelectResult();
+            Assertions.assertNotNull(goodsRowDDOSInDataBase.get(0));
         });
-        //добавить проверку с БД
     }
 
     @Test
+    @Order(3)
     @DisplayName("Проверка отправки запроса без тела - ошибка 400")
     public void setNullObjectToListOfGood() {
         Allure.step("Подготовка спецификаций, ожидаемый код - 400",() ->
@@ -76,6 +85,7 @@ public class ApiTests {
     }
 
     @Test
+    @Order(4)
     @DisplayName("Проверка функции Сброса Данных через API")
     public void resetDataFromAPI() {
         Allure.step("Подготовка спецификаций, ожидаемый код - 200",() ->
@@ -89,7 +99,9 @@ public class ApiTests {
                     .log().all()
                     .extract().statusCode();
             Assertions.assertEquals(code, StatusCode.OK_200.getCode());
+            List<GoodsRowDDO> goodsRowDDOSInDataBase = sqlExecutor.createQuerySql(CommonSqlScript.GET_ALL)
+                    .getSelectResult();
+            Assertions.assertEquals(goodsRowDDOSInDataBase.size(), 4);
         });
-        //добавить проверку с БД
     }
 }

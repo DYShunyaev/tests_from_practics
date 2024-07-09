@@ -7,6 +7,13 @@ import java.nio.charset.Charset;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import utils.database.CommonSqlScript;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -44,5 +51,26 @@ public class FileHelper {
     private static InputStream getResourceFileStream(String pathToResourceFile) {
         ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
         return classLoader.getResourceAsStream(pathToResourceFile);
+    }
+
+    public static String readXml(CommonSqlScript commonSqlScript) {
+        String result = "";
+        try {
+            File file = new File(commonSqlScript.getPathToXml());
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            Document document = builder.parse(file);
+
+            NodeList scriptList = document.getElementsByTagName("singleScript");
+
+            for (int i = 0; i < scriptList.getLength(); i++) {
+                Element scriptElement = (Element) scriptList.item(i);
+                String scriptName = scriptElement.getAttribute("name");
+                if (scriptName.equals(commonSqlScript.toString())) result = scriptElement.getTextContent().trim();
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+        return result;
     }
 }

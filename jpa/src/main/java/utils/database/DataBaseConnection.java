@@ -1,6 +1,6 @@
 package utils.database;
 
-import config_provider.ConfigProvider;
+import config.config_provider.config_provider.ConfigProvider;
 import lombok.Getter;
 
 import java.sql.Connection;

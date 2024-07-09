@@ -1,4 +1,4 @@
-import config_provider.ConfigProvider;
+import config.config_provider.config_provider.ConfigProvider;
 import io.qameta.allure.Allure;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 import specifications.Specifications;
 
 import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;

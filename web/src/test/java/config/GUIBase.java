@@ -1,31 +1,24 @@
 package config;
 
-import io.qameta.allure.Allure;
-import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Tag;
+import config.config_log4j.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import web_driver_config.WebDriverInitial;
 
-@Slf4j
 @Tag("GUI")
 public abstract class GUIBase {
 
     protected static WebDriver driver;
 
-    @BeforeAll
-    protected static void setUp() {
-        Allure.step("Запуск WebDriver", () -> {
-            driver = WebDriverInitial.getWebDriver().getDriver();
-        });
+    @BeforeEach
+    protected void setUp() {
+        driver = WebDriverInitial.getWebDriver().getDriver();
     }
 
-    @AfterAll
-    protected static void tearDown() {
-        Allure.step("Закрытие WebDriver",() -> {
-            driver.close();
-            log.info(" - 'Test ends.'");
-        });
+    @AfterEach
+    protected void tearDown() {
+        WebDriverInitial.closeWebBrowser();
     }
 }
